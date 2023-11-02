@@ -49,21 +49,23 @@ router.post("/login", async (req, res) => {
   }
   else {
     const accessToken = createTokens(user);
-
+    
+    console.log(user.username)
     res.cookie("access-token", accessToken, {
       maxAge: 60 * 60 * 24 * 30 * 1000,
       httpOnly: true,
+      // sameSite: "none"
     });
+    
+    res.send({"access-token":accessToken, "username": user.username, "role": user.role});
 
-    res.json("LOGGED IN");
+
   }
   });
 });
 
 
-// router.get("/dashboard", validateToken, (req, res) => {
-//   res.json("Welcome to dashboard");
-// });
+
 
 router.get("/dashboard", validateToken, async (req, res) => {
   // Accessing the user ID from the req object
@@ -77,8 +79,8 @@ router.get("/dashboard", validateToken, async (req, res) => {
   }
 
   if (user.role >= 1) {
-    // User has role 2, allow access to the dashboard
-    res.json("Welcome to dashboard");
+  
+    res.send({ id: user.id, username: user.username , role : user.role});
   } else {
     // User does not have role 2, redirect to another page
     res.redirect("/logout");
