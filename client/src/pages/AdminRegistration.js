@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
-function Registration() {
+function AdminRegistration() {
   const initialValues = {
     username: "",
     password: "",
@@ -18,7 +18,7 @@ function Registration() {
   const history = useHistory();
 
   const onSubmit = (data, { setSubmitting, setFieldError }) => {
-    axios.post("http://localhost:3001/auth/reg", data)
+    axios.post("http://localhost:3001/auth/reg-admin", data)
       .then((response) => {
         console.log(response.data);
         // Handle successful registration
@@ -71,4 +71,4 @@ function Registration() {
   );
 }
 
-export default Registration;
+export default AdminRegistration;

@@ -150,7 +150,7 @@ router.post("/admin-login", async (req, res) => {
       httpOnly: true,
     });
 
-    res.json("LOGGED IN");
+    res.send({"access-token":accessToken, "username": user.username, "role": user.role});
   }
   });
 });
@@ -172,7 +172,7 @@ router.get("/admin-dashboard", validateToken, async (req, res) => {
 
   if (user.role === 2) {
     // User has role 2, allow access to the dashboard
-    res.json("Welcome to adminstrator dashboard");
+    res.send({ id: user.id, username: user.username , role : user.role});
   } else {
     // User does not have role 2, redirect to another page
     res.redirect("/logout");
